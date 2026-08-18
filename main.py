@@ -345,14 +345,16 @@ def generate_vless_link(
             "alpn": alpn_val,
         }
     else:
-        # xhttp — مود auto: خود کلاینت بر اساس نوع اتصال (H2/REALITY یا نه)
-        # بین packet-up و stream-up انتخاب می‌کنه؛ مسیر سرور به مود بستگی نداره.
+        # xhttp — مود packet-up ثابت: بعضی پراکسی‌ها (از جمله زیرساخت Railway)
+        # بدنه‌ی POST پیوسته‌ی stream-up رو بافر می‌کنن و باعث گیرکردن/تایم‌اوت
+        # میشن؛ packet-up چون از POSTهای جدا و کامل استفاده می‌کنه، پشت این
+        # پراکسی‌ها هم بدون مشکل جواب میده.
         path = f"/xhttp-siz10/{uuid}"
         params = {
             "encryption": "none",
             "security": "tls",
             "type": "xhttp",
-            "mode": "auto",
+            "mode": "packet-up",
             "host": host,
             "path": path,
             "sni": host,
